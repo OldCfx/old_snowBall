@@ -109,15 +109,9 @@ end
 
 CreateThread(function()
     while true do
-        Wait(0)
-
         local ped = PlayerPedId()
         local coords = GetEntityCoords(ped)
-
-
         local interactionDist = 1.0
-
-
         local modelHash = `xm3_prop_xm3_snowman_01b`
         local obj = GetClosestObjectOfType(coords, interactionDist, modelHash, false, false, false)
 
@@ -126,6 +120,7 @@ CreateThread(function()
                 showTextUi = true
                 lib.showTextUI('E pour détruire le bonhomme de neige')
             end
+
             if IsControlJustPressed(0, 38) then
                 if lib.progressCircle({
                         duration = Config.timeToDestroySnowMan,
@@ -143,7 +138,6 @@ CreateThread(function()
                             bone = 76,
                             flag = 1
                         },
-
                     })
                 then
                     showTextUi = false
@@ -151,7 +145,6 @@ CreateThread(function()
 
                     local fxDict = "core_snow"
                     local fxName = "bang_snow"
-
 
                     if not HasNamedPtfxAssetLoaded(fxDict) then
                         RequestNamedPtfxAsset(fxDict)
@@ -161,8 +154,6 @@ CreateThread(function()
                     end
 
                     UseParticleFxAsset(fxDict)
-
-
                     local objCoords = GetEntityCoords(obj)
                     StartParticleFxNonLoopedAtCoord(fxName, objCoords.x, objCoords.y, objCoords.z + 1.0,
                         0.0, 0.0, 0.0,
@@ -174,14 +165,19 @@ CreateThread(function()
                     return
                 end
             end
+
+            Wait(0)
         else
             if showTextUi then
                 showTextUi = false
                 lib.hideTextUI()
             end
+
+            Wait(500)
         end
     end
 end)
+
 
 
 RegisterCommand("snowball", function(source, args)
